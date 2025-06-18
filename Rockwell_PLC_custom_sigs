@@ -1,0 +1,43 @@
+# These signatures detect interactions of interest with Rockwell PLC5s.
+# Traffic is inspected against CIP port 44818 for the ASCII patterns reflected in the signature names.
+#
+# Category 26 is Fortinet's "Operational.Technology" application category. These signatures will not be selectable in IPS profiles without an active OT license on the FortiGate.
+# To circumvent this in the absence of the OT license, you can set the category to a default one, like 15 for "Network.Service" or 32 for "Unknown Applications".
+
+config application custom
+edit Rockwell.PLC.GoingOnline
+set protocol 1
+set category 26
+set signature "F-SBID( --name \"Rockwell.PLC.GoingOnline\"; --protocol tcp; --flow from_client; --dst_port 44818; --pattern \"|47006f0069006e00670020004f006e006c0069006e|\";)"
+next
+edit Rockwell.PLC.GoingOffline
+set protocol 1
+set category 26
+set signature "F-SBID( --name \"Rockwell.PLC.GoingOffline\"; --protocol tcp; --flow from_client; --dst_port 44818; --pattern \"|47006f0069006e00670020004f00660066006c0069006e0065|\";)"
+next
+edit Rockwell.PLC.DownloadedProject
+set protocol 1
+set category 26
+set signature "F-SBID( --name \"Rockwell.PLC.DownloadedProject\"; --protocol tcp; --flow from_client; --dst_port 44818; --pattern \"|44006f0077006e006c006f0061006400650064002000700072006f006a006500630074|\";)"
+next
+edit Rockwell.PLC.ProgramChanged
+set protocol 1
+set category 26
+set signature "F-SBID( --name \"Rockwell.PLC.ProgramChanged\"; --protocol tcp; --flow from_client; --dst_port 44818; --pattern \"|4300680061006e006700650064002000500072006f00700065007200740069006500730020006f0066002000500072006f006700720061006d|\";)"
+next
+edit Rockwell.PLC.ProgramDownload
+set protocol 1
+set category 26
+set signature "F-SBID( --name \"Rockwell.PLC.ProgramDownload\"; --protocol tcp; --flow from_client; --dst_port 44818; --pattern \"|44006f0077006e006c006f0061006400650064002000700072006f006a006500630074|\";)"
+next
+edit Rockwell.PLC.ProgramMode
+set protocol 1
+set category 26
+set signature "F-SBID( --name \"Rockwell.PLC.ProgramMode\"; --protocol tcp; --flow from_client; --dst_port 44818; --pattern \"|4300680061006e006700650064002000500072006f00700065007200740069006500730020006f0066002000500072006f006700720061006d|\"; --within 100; --pattern \"|74006f002000500072006f006700720061006d0020004d006f00640065|\";)"
+next
+edit Rockwell.PLC.RunMode
+set protocol 1
+set category 26
+set signature "F-SBID( --name \"Rockwell.PLC.RunMode\"; --protocol tcp; --flow from_client; --dst_port 44818; --pattern \"|4300680061006e006700650064002000500072006f00700065007200740069006500730020006f0066002000500072006f006700720061006d|\"; --within 100; --pattern \"|74006f002000520075006e0020004d006f00640065|\";)"
+next
+end
